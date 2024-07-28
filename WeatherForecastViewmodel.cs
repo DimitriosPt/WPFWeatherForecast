@@ -26,6 +26,9 @@ namespace WPFWeatherForecast
         /// </summary>
         public double Longitude { get; set; }
 
-        public ObservableCollection<DailyForecast> DailyForecasts { get; set; } = new ObservableCollection<DailyForecast>();
+        /// <summary>
+        /// Gets the collection of daily forecasts.
+        /// </summary>
+        public ObservableCollection<DailyForecast> DailyForecasts { get; } = new ObservableCollection<DailyForecast>();
     }
 }
