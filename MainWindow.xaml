@@ -8,6 +8,9 @@
         Title="MainWindow"
         Height="450"
         Width="800">
+    <Window.DataContext>
+        <local:WeatherForecastViewmodel />
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -40,5 +43,10 @@
                   MaxHeight="40">
             <TextBox Text="{Binding Longitude}" />
         </GroupBox>
+        <ListBox Grid.Row="2"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 ItemsSource="{Binding DailyForecasts}"
+                 DisplayMemberPath="DetailedForecast"/>
     </Grid>
 </Window>
