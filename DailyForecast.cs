@@ -2,12 +2,12 @@
 {
     public class DailyForecast
     {
-        public DailyForecast(DayOfWeek weekday, double lowTemp, double highTemp, WeatherCondition weatherCondition)
+        public DailyForecast(DayOfWeek weekday, double lowTemp, double highTemp, string detailedForecast)
         {
             this.WeekDay = weekday;
             this.LowTemp = lowTemp;
             this.HighTemp = highTemp;
-            this.WeatherCondition = weatherCondition;
+            this.DetailedForecast = detailedForecast;
         }
 
         /// <summary>
@@ -28,6 +28,6 @@
         /// <summary>
         /// Gets the weather condtion for the day.
         /// </summary>
-        public WeatherCondition WeatherCondition { get; private set; }
+        public string DetailedForecast { get; private set; }
     }
 }

@@ -44,21 +44,65 @@ namespace WPFWeatherForecast
         /// <param name="latitude">The latitudinal coordinate.</param>
         /// <param name="longitude">The longitudinal coordinate.</param>
         /// <returns>The first daily forecast.</returns>
-        public async Task<Root> GetDailyForecast(double latitude, double longitude)
+        public async Task<Root> GetForecastRootResponse(double latitude, double longitude)
         {
             // https://api.weather.gov/points/{lat},{lon}
-            string dailyForecastEndpoint = $"https://api.weather.gov/points/38.8894,-77.0352";
+            string dailyForecastEndpoint = $"https://api.weather.gov/points/{latitude},{longitude}";
 
             var response = await this.Client.GetAsync(dailyForecastEndpoint);
 
             if (response.IsSuccessStatusCode)
             {
-                var properties = JsonConvert.DeserializeObject<Root>(await response.Content.ReadAsStringAsync());
+                var rootResponse = JsonConvert.DeserializeObject<Root>(await response.Content.ReadAsStringAsync());
 
-                return properties;
+                return rootResponse;
             }
 
             return null;
+        }
+
+        public async Task<DailyForecast> GetDailyForecastAsync(double latitude, double longitude)
+        {
+            var root = await GetForecastRootResponse(latitude, longitude);
+
+            if (root != null)
+            {
+                var dailyForecastEndpoint = root.Properties.Forecast;
+
+                var response = await this.Client.GetAsync(dailyForecastEndpoint);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+
+                    // Log the JSON response
+                    Console.WriteLine("JSON Response: " + json);
+
+                    try
+                    {
+                        var content = JsonConvert.DeserializeObject<DailyForecastResponse>(json);
+
+                        if (content?.Properties?.Periods != null && content.Properties.Periods.Any())
+                        {
+                            var forecast = content.Properties.Periods.First();
+                            var dailyForecast = new DailyForecast(DateTime.Today.DayOfWeek, forecast.Temperature, forecast.Temperature, forecast.DetailedForecast);
+
+                            return dailyForecast;
+                        }
+                    }
+                    catch (JsonSerializationException ex)
+                    {
+                        // Log the deserialization error
+                        Console.WriteLine($"Deserialization error: {ex.Message}");
+                    }
+                }
+
+                return null;
+
+            }
+
+            return null;
+
         }
 
     }
