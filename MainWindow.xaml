@@ -1,0 +1,44 @@
+﻿<Window x:Class="WPFWeatherForecast.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFWeatherForecast"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="450"
+        Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Please enter a latitude and longitude to retrieve a forecast."
+                   VerticalAlignment="Center"
+                   Grid.ColumnSpan="5"
+                   HorizontalAlignment="Center"
+                   FontWeight="Bold"
+                   Margin="20" />
+        <GroupBox Header="Latitude"
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  MaxHeight="40">
+            <TextBox Text="{Binding Latitude}" />
+        </GroupBox>
+        <GroupBox Header="Longitude"
+                  Grid.Row="1"
+                  Grid.Column="3"
+                  MaxHeight="40">
+            <TextBox Text="{Binding Longitude}" />
+        </GroupBox>
+    </Grid>
+</Window>
